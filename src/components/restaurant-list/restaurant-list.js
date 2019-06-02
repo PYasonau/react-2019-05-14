@@ -26,6 +26,7 @@ class RestaurantList extends Component {
             {...restaurant}
             isMenuOpen={openItemId === restaurant.id}
             toggleOpenMenu={toggleOpenItem}
+            isAddROpen={false}
           />
         ))}
       </List>

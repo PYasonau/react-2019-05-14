@@ -30,3 +30,10 @@ export const deleteFromCart = id => ({
     id
   }
 });
+
+export const addReview = restoranId => ({
+  type: "ADD_REVIEW",
+  payload: {
+    restoranId
+  }
+});

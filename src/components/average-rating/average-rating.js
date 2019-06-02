@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
 import { Rate } from "antd";
 import PropTypes from "prop-types";
+import { createReviewSelector } from "../../selectors";
+import store from "../../store/index";
 
 class AverageRating extends PureComponent {
   state = {
@@ -8,11 +10,13 @@ class AverageRating extends PureComponent {
   };
 
   render() {
-    const { reviews } = this.props;
+    const filteredReviews = store
+      .getState()
+      .reviews.filter(r => this.props.reviews.includes(r.id));
     const rawRating =
-      reviews.reduce((acc, { rating }) => {
+      filteredReviews.reduce((acc, { rating }) => {
         return acc + rating;
-      }, 0) / reviews.length;
+      }, 0) / filteredReviews.length;
     const normalizedRating = Math.floor(rawRating * 2) / 2;
 
     return <Rate defaultValue={normalizedRating} disabled allowHalf />;
@@ -20,9 +24,7 @@ class AverageRating extends PureComponent {
 }
 
 AverageRating.propTypes = {
-  reviews: PropTypes.arrayOf(
-    PropTypes.shape({ rating: PropTypes.number.isRequired }).isRequired
-  ).isRequired
+  reviews: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 export default AverageRating;

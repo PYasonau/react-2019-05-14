@@ -4,8 +4,10 @@ import { List, Avatar, Button } from "antd";
 import AverageRating from "../average-rating";
 import ReviewList from "../review-list";
 import { toggleVisibility } from "../../decorators/toggleVisibility";
+import { toggleVisibilityReview } from "../../decorators/toggleVisibilityReview";
 import * as PropTypes from "prop-types";
 import "./restaurant.css";
+import AddReview from "../add-review/add-review";
 
 class Restaurant extends PureComponent {
   state = {
@@ -26,7 +28,9 @@ class Restaurant extends PureComponent {
       reviews,
       isMenuOpen,
       isOpen: isReviewOpen,
-      toggleVisibility
+      isReviewAddOpen: isAddROpen,
+      toggleVisibility,
+      toggleVisibilityReview
     } = this.props;
 
     return this.state.error ? (
@@ -44,6 +48,14 @@ class Restaurant extends PureComponent {
               {isReviewOpen ? "Hide reviews" : "Show reviews"}
             </Button>,
             <Button
+              data-automation-id={`toggle-review-list-${id}`}
+              onClick={toggleVisibilityReview}
+            >
+              {isReviewOpen
+                ? "Hide Add review dialog"
+                : "Show Add review dialog"}
+            </Button>,
+            <Button
               data-automation-id={`toggle-menu-${id}`}
               onClick={this.handleToggleOpenClick}
             >
@@ -57,6 +69,7 @@ class Restaurant extends PureComponent {
           />
         </List.Item>
         {isReviewOpen ? <ReviewList reviews={reviews} /> : null}
+        {isAddROpen ? <AddReview restoranId={this.props.id} /> : null}
         {isMenuOpen ? <RestaurantMenu menu={menu} /> : null}
       </>
     );
@@ -81,4 +94,4 @@ Restaurant.propTypes = {
   toggleVisibility: PropTypes.func.isRequired
 };
 
-export default toggleVisibility(Restaurant);
+export default toggleVisibilityReview(toggleVisibility(Restaurant));
