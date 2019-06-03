@@ -31,9 +31,24 @@ export const deleteFromCart = id => ({
   }
 });
 
-export const addReview = restoranId => ({
-  type: "ADD_REVIEW",
-  payload: {
-    restoranId
+export const addReview = (
+  restoranId,
+  reviewId,
+  reviewText,
+  userId,
+  userName,
+  rating
+) => (
+  console.log(userId),
+  {
+    type: "ADD_REVIEW",
+    payload: {
+      restoranId: restoranId,
+      reviewId: reviewId,
+      reviewText: reviewText,
+      userId: userId,
+      rating: rating,
+      userName: userName
+    }
   }
-});
+);

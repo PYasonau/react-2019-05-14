@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { Rate } from "antd";
 import PropTypes from "prop-types";
-import { createReviewSelector } from "../../selectors";
 import store from "../../store/index";
 
 class AverageRating extends PureComponent {

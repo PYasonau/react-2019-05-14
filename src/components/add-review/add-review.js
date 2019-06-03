@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-
+import { addReview } from "../../ac";
 import { Form, Input, Button } from "antd";
 import "./../../components/user-form/user-form.css";
+import { connect } from "react-redux";
 
 class AddReview extends Component {
   state = {
@@ -39,7 +40,7 @@ class AddReview extends Component {
           <Input.TextArea value={rating} onChange={this.handleAddressChange} />
         </Form.Item>
         <Form.Item className="user-form-submit-section">
-          <Button type="primary" htmlType="submit" onClick={this.submit}>
+          <Button type="primary" htmlType="submit" onClick={this.add}>
             Send order
           </Button>
         </Form.Item>
@@ -65,19 +66,43 @@ class AddReview extends Component {
     });
   };
 
+  add = () => {
+    console.log("clicked");
+    let reviewId = Math.random()
+      .toString(36)
+      .substring(7);
+    let userId = Math.random()
+      .toString(36)
+      .substring(7);
+
+    let text = this.state.text;
+    let rating = this.state.rating;
+    console.log(text);
+    console.log(rating);
+
+    this.props.addReview(
+      this.props.restoranId,
+      reviewId,
+      this.state.text,
+      userId,
+      this.state.name,
+      this.state.rating
+    );
+  };
+
   submit = e => {
     e.preventDefault();
     console.log(this.state);
   };
 }
 
-/* const mapDispatchToProps = {
-    addnewReview: addReview
-  };
+const mapDispatchToProps = {
+  addReview
+};
 
+export default connect(
+  null,
+  mapDispatchToProps
+)(AddReview);
 
-  export default connect(
-    null,
-    mapDispatchToProps
-  )(AddReview); */
-export default AddReview;
+/* export default AddReview; */
